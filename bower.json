@@ -1,0 +1,21 @@
+{
+  "name": "Calculadora",
+  "authors": [
+    "Luis San Martín <lsansaa@gmail.com>"
+  ],
+  "description": "Calculadora en polymer",
+  "main": "index.html",
+  "keywords": [
+    "calculadora",
+    "polymer"
+  ],
+  "license": "MIT",
+  "homepage": "index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
