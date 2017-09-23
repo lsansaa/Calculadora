@@ -8,7 +8,95 @@
 </head>
 <body>
 
-    <h1>Calculadora</h1>
+    <div class="content">
+
+        <div>
+            <h1>Calculadora</h1>
+        </div>
+
+        <div>
+
+            <div>
+
+                <p id="valuebtn">0</p>
+
+            </div>
+
+            <table>
+
+                <tr>
+
+                    <th><button type="button" value="1" onclick="getNumber1()">1</button></th>
+                    <th><button type="button" value="2" onclick="getNumber2()">2</button></th>
+                    <th><button type="button" value="3" onclick="getNumber3()">3</button></th>
+
+                </tr>
+
+                <tr>
+
+                    <th><button type="button" value="4" onclick="getNumber4()">4</button></th>
+                    <th><button type="button" value="5" onclick="getNumber5()">5</button></th>
+                    <th><button type="button" value="6" onclick="getNumber6()">6</button></th>
+
+                </tr>
+
+                <tr>
+
+                    <th><button type="button" value="7" onclick="getNumber7()">7</button></th>
+                    <th><button type="button" value="8" onclick="getNumber8()">8</button></th>
+                    <th><button type="button" value="9" onclick="getNumber9()">9</button></th>
+
+                </tr>
+
+                <tr>
+
+                    <th><button type="button" value="0" onclick="getNumber0()">0</button></th>
+                    <th><button type="button">C</button></th>
+                    <th><button type="button" value=".">.</button></th>
+
+                </tr>
+
+            </table>
+
+        </div>
+    </div>
+
+    <script>
+        function getNumber1(){
+            document.getElementById("valuebtn").innerHTML = "1"
+        }
+        function getNumber2(){
+            document.getElementById("valuebtn").innerHTML = "2"
+        }
+        function getNumber3(){
+            document.getElementById("valuebtn").innerHTML = "3"
+        }
+        function getNumber4(){
+            document.getElementById("valuebtn").innerHTML = "4"
+        }
+        function getNumber5(){
+            document.getElementById("valuebtn").innerHTML = "5"
+        }
+        function getNumber6(){
+            document.getElementById("valuebtn").innerHTML = "6"
+        }
+        function getNumber7(){
+            document.getElementById("valuebtn").innerHTML = "7"
+        }
+        function getNumber8(){
+            document.getElementById("valuebtn").innerHTML = "8"
+        }
+        function getNumber9(){
+            document.getElementById("valuebtn").innerHTML = "9"
+        }
+        function getNumber0(){
+            document.getElementById("valuebtn").innerHTML = "0"
+        }
+
+
+    </script>
+
+
 
 </body>
 </html>
