@@ -1,0 +1,27 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-label/iron-label.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<dom-module id="screen-element">
+    <template>
+        <paper-button>{{result}}</paper-button>
+    </template>
+    <script>
+        class ScreenElement extends Polymer.Element {
+            static get is() { return 'screen-element'; }
+            static get properties() {
+                return {
+                    result: {
+                        type: String,
+                        value: 0
+                    },
+                    data: {
+                        type: Object,
+                        notify: true,
+                        value: function() { return {}; }
+                    }
+                }
+            }
+        }
+        window.customElements.define(ScreenElement.is, ScreenElement);
+    </script>
+</dom-module>

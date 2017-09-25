@@ -1,0 +1,33 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<dom-module id="number-button">
+    <template>
+        <style>
+            /*paper-button {
+                background: blue;
+                color: white;
+            }*/
+        </style>
+        <paper-button raised>[[value]]</paper-button>
+    </template>
+    <script>
+        class NumberButton extends Polymer.Element {
+            static get is() { return 'number-button'; }
+            static get properties() {
+                return {
+                    value: {
+                        type: String,
+                        //displaying this value on screen
+                        value: '0'
+                    },
+                    data: {
+                        type: Object,
+                        notify: true,
+                        value: function() { return {}; }
+                    }
+                }
+            }
+        }
+        window.customElements.define(NumberButton.is, NumberButton);
+    </script>
+</dom-module>

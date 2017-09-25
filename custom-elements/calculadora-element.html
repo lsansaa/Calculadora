@@ -1,0 +1,62 @@
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/polymer/lib/mixins/gesture-event-listeners.html">
+<link rel="import" href="number-button.html">
+<link rel="import" href="screen-element.html">
+
+<dom-module id="calculadora-element">
+
+    <template>
+        <h2>[[my_val]]</h2>
+        <screen-element result="{{result}}"></screen-element>
+        <br>
+        <number-button value="7" on-click="{{ingresarNumero}}">7</number-button>
+        <number-button value="8" on-click="{{ingresarNumero}}">8</number-button>
+        <number-button value="9" on-click="{{ingresarNumero}}">9</number-button>
+        <br>
+        <number-button value="4" on-click="{{ingresarNumero}}">4</number-button >
+        <number-button value="5" on-click="{{ingresarNumero}}">5</number-button>
+        <number-button value="6" on-click="{{ingresarNumero}}">6</number-button>
+        <br>
+        <number-button value="1" on-click="{{ingresarNumero}}">1</number-button>
+        <number-button value="2" on-click="{{ingresarNumero}}">2</number-button>
+        <number-button value="3" on-click="{{ingresarNumero}}">3</number-button>
+        <br>
+        <number-button value="0" on-click="{{ingresarNumero}}">0</number-button>
+        <number-button value="." on-click="{{agregarPumto}}">.</number-button>
+        <number-button value="=" on-click="{{calcularResultado}}">=</number-button>
+    </template>
+
+    <script>
+        class CalculadoraElement extends Polymer.GestureEventListeners(Polymer.Element) {
+            static get is() { return 'calculadora-element'; }
+            static get properties() {
+                return {
+                    result:{
+                        type: String,
+                        value: 0,
+                    },
+                    my_val: {
+                        type: String,
+                        //displaying this value on screen
+                        value: 'Calculadora'
+                    },
+                    data: {
+                        type: Object,
+                        notify: true,
+                        value: function() { return {}; }
+                    }
+                }
+            }
+            constructor() {
+                super();
+                Polymer.Gestures.addListener(this, 'tap', e => this.ingresarNumero(e));
+            }
+            ingresarNumero(e){
+                this.result = e.value;
+            }
+        }
+        window.customElements.define(CalculadoraElement.is, CalculadoraElement);
+    </script>
+
+</dom-module>
