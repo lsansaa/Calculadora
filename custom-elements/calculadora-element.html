@@ -11,35 +11,68 @@
         }
 
         #key-pad {
-            width: 275px;
-            height: 195px;
+            width: 320px;
+            height: 375px;
+            color: #FFFFFF;
+            background-color: #B2DFDB;
+        }
+        #header{
+            background-color: #009688;
+            color: #FFFFFF;
+            width: 320px;
+            height: 65px;
+            overflow: hidden;
+            text-align: center;
+            display: flex;
+            justify-content: center; /* align horizontal */
+            align-items: center;
+            font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
         }
         #screen{
-            width: 275px;
+            background-color: #BDBDBD;
+            color: #212121;
+            width: 320px;
             height: 65px;
+            overflow: hidden;
+            text-align: right;
+            display: flex;
+            justify-content: right; /* align horizontal */
+            align-items: center;
+        }
+        #result{
+            padding-right: 8px;
+            padding-left: 8px;
+            font-size: 50px;
+            text-align: right;
+            font-weight: 100;
+            font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
         }
         paper-button{
+            border-radius: 0px;
+            background-color: #00796B;
+            font-family: RobotoDraft, 'Helvetica Neue', Helvetica, Arial;
             width: 65px;
             height: 65px;
             min-width: 65px;
-            margin-left: 0px;
-            margin-right: 0px;
-            padding-left: 9px;
-            padding-right: 9px;
-            padding-top: 11px;
-            padding-bottom: 11px;
+            padding: 0px;
+            margin-left: 5px;
+            margin-right: 5px;
+            margin-top: 5px;
+            margin-bottom: 5px;
         }
     </style>
     <template>
         <div align="center">
-            <h1 align="center">[[my_val]]</h1>
-            <section id="screen" >
-                <h3 id="result" align="right">{{result}}</h3>
+            <div id="header">
+                <h1 align="center">[[my_val]]</h1>
+            </div>
+            <section id="screen">
+                <div id="result">{{result}}</div>
 
             </section>
             <section id="key-pad" class="layout horizontal wrap center-center">
                 <template is="dom-repeat" items="[[numButtons]]">
-                    <paper-button on-tap="_click" raised>[[item.number]]</paper-button>
+                    <paper-button on-tap="_click">[[item.number]]</paper-button>
                 </template>
             </section>
         </div>
@@ -128,17 +161,17 @@
                     }
                     //console.log(old.toString()+item.number.toString());
                 }else{
+                    let operators = ['+', '-', '*', '/'];
+                    let length = result.toString().length;
+                    let last = result.charAt(length-1);
                     switch(item.number){
                         case ".":
-                            let length = result.toString().length;
-                            let last = result.charAt(length-1);
                             if(last==="."){
                                 console.log("ya hay una coma")
                             }else{
                                 this.result = result.toString()+".";
                                 this.operator = ".";
                             }
-
                             //console.log(this.result);
                             break;
                         case "C":
@@ -156,16 +189,11 @@
                             if(result===0){
                                 console.log("Nada que calcular");
                             }else{
-                                let operators = ['+', '-', '*', '/'];
-                                let length = result.toString().length;
-                                let last = result.charAt(length-1);
                                 if(operators.indexOf(last) > -1 || last === '.'){
                                     result = result.toString().substr(0,length-1);
                                 }
                                 this.result = eval(result);
                             }
-                            break;
-                        default:
                             break;
                     }
                     //console.log(item.isNumber)
