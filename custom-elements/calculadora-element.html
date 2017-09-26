@@ -5,26 +5,44 @@
 <link rel="import" href="screen-element.html">
 
 <dom-module id="calculadora-element">
+    <style>
+        :host {
+            display: block;
+        }
 
+        #key-pad {
+            width: 275px;
+            height: 195px;
+        }
+        #screen{
+            width: 275px;
+            height: 65px;
+        }
+        paper-button{
+            width: 65px;
+            height: 65px;
+            min-width: 65px;
+            margin-left: 0px;
+            margin-right: 0px;
+            padding-left: 9px;
+            padding-right: 9px;
+            padding-top: 11px;
+            padding-bottom: 11px;
+        }
+    </style>
     <template>
-        <h2>[[my_val]]</h2>
-        <screen-element result="{{result}}"></screen-element>
-        <br>
-        <number-button value="7" on-click="{{ingresarNumero}}">7</number-button>
-        <number-button value="8" on-click="{{ingresarNumero}}">8</number-button>
-        <number-button value="9" on-click="{{ingresarNumero}}">9</number-button>
-        <br>
-        <number-button value="4" on-click="{{ingresarNumero}}">4</number-button >
-        <number-button value="5" on-click="{{ingresarNumero}}">5</number-button>
-        <number-button value="6" on-click="{{ingresarNumero}}">6</number-button>
-        <br>
-        <number-button value="1" on-click="{{ingresarNumero}}">1</number-button>
-        <number-button value="2" on-click="{{ingresarNumero}}">2</number-button>
-        <number-button value="3" on-click="{{ingresarNumero}}">3</number-button>
-        <br>
-        <number-button value="0" on-click="{{ingresarNumero}}">0</number-button>
-        <number-button value="." on-click="{{agregarPumto}}">.</number-button>
-        <number-button value="=" on-click="{{calcularResultado}}">=</number-button>
+        <div align="center">
+            <h1 align="center">[[my_val]]</h1>
+            <section id="screen" >
+                <h3 id="result" align="right">{{result}}</h3>
+
+            </section>
+            <section id="key-pad" class="layout horizontal wrap center-center">
+                <template is="dom-repeat" items="[[numButtons]]">
+                    <paper-button on-tap="_click" raised>[[item.number]]</paper-button>
+                </template>
+            </section>
+        </div>
     </template>
 
     <script>
@@ -32,9 +50,34 @@
             static get is() { return 'calculadora-element'; }
             static get properties() {
                 return {
+                    numButtons: {
+                        type: Array,
+                        value: function (){
+                            return [
+                                {number: "C", isNumber: false, isOperator:false},
+                                {number: "CE", isNumber: false, isOperator:false},
+                                {number: "/", isNumber: false, isOperator:true},
+                                {number: "*", isNumber: false, isOperator:true},
+                                {number: 9, isNumber: true, isOperator:false},
+                                {number: 8, isNumber: true, isOperator:false},
+                                {number: 7, isNumber: true, isOperator:false},
+                                {number: "-", isNumber: false, isOperator:true},
+                                {number: 6, isNumber: true, isOperator:false},
+                                {number: 5, isNumber: true, isOperator:false},
+                                {number: 4, isNumber: true, isOperator:false},
+                                {number: "+", isNumber: false, isOperator:true},
+                                {number: 3, isNumber: true, isOperator:false},
+                                {number: 2, isNumber: true, isOperator:false},
+                                {number: 1, isNumber: true, isOperator:false},
+                                {number: "=", isNumber: false, isOperator:false},
+                                {number: 0, isNumber: true, isOperator:false},
+                                {number: ".", isNumber: false, isOperator:false},
+                            ]
+                        }
+                    },
                     result:{
                         type: String,
-                        value: 0,
+                        value: 0
                     },
                     my_val: {
                         type: String,
@@ -45,15 +88,90 @@
                         type: Object,
                         notify: true,
                         value: function() { return {}; }
+                    },
+                    finalResult:{
+                        type: String,
+                        value: 0,
+                    },
+                    operator:{
+                        type: String,
+                        value: ""
                     }
                 }
             }
             constructor() {
                 super();
-                Polymer.Gestures.addListener(this, 'tap', e => this.ingresarNumero(e));
             }
-            ingresarNumero(e){
-                this.result = e.value;
+            _click(event){
+                let item = event.model.item;
+                let result = this.result;
+                let isNumber = item.isNumber;
+                let isOperator = item.isOperator;
+                if(isNumber){
+                    if(result === 0){
+                        this.result = item.number.toString();
+                        //console.log(item.number.toString());
+                    }else{
+                        this.result = result.toString()+item.number.toString();
+                        //console.log(old.toString()+item.number.toString());
+                    }
+                    this.operator = "";
+                }else if(isOperator){
+                    let operator = this.operator+item.number.toString();
+                    let validOperators = ['+-',"-+","+","*","","-","/","/-","*-","*+","/+"];
+                    if(validOperators.indexOf(operator)>-1){
+                        this.operator= operator;
+                        this.result = result.toString()+item.number.toString();
+                        console.log(this.operator);
+                    }else{
+                        console.log(this.operator);
+                    }
+                    //console.log(old.toString()+item.number.toString());
+                }else{
+                    switch(item.number){
+                        case ".":
+                            let length = result.toString().length;
+                            let last = result.charAt(length-1);
+                            if(last==="."){
+                                console.log("ya hay una coma")
+                            }else{
+                                this.result = result.toString()+".";
+                                this.operator = ".";
+                            }
+
+                            //console.log(this.result);
+                            break;
+                        case "C":
+                            this.result = 0;
+                            break;
+                        case "CE":
+                            let size = result.toString().length;
+                            if(size===1){
+                                this.result=0
+                            }else{
+                                this.result = result.toString().substr(0,size-1);
+                            }
+                            break;
+                        case "=":
+                            if(result===0){
+                                console.log("Nada que calcular");
+                            }else{
+                                let operators = ['+', '-', '*', '/'];
+                                let length = result.toString().length;
+                                let last = result.charAt(length-1);
+                                if(operators.indexOf(last) > -1 || last === '.'){
+                                    result = result.toString().substr(0,length-1);
+                                }
+                                this.result = eval(result);
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    //console.log(item.isNumber)
+                    //console.log(item.number)
+                }
+
             }
         }
         window.customElements.define(CalculadoraElement.is, CalculadoraElement);
